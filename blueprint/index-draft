@@ -164,7 +164,7 @@ docker build -t genesys_exporter .
 - Run the commnd below:
 
 ```bash
-docker compose up
+docker-compose up
 ```
 
 **Note**: Make sure you have no processes running in ports 3000, 9090,9093, and 2113 because those ports will be utilized by the docker containers.

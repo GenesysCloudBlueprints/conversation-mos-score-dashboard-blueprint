@@ -31,14 +31,14 @@ var (
 	)
 
 	totalHits = prometheus.NewDesc(prometheus.BuildFQName(namespace, "", "total_hits"),
-		"Total number of converstations received from api",
+		"Total number of conversations received from api",
 		nil, nil)
 
 	averageMosScore = prometheus.NewDesc(prometheus.BuildFQName(namespace, "", "average_mos_score"),
-		"Average MOS score within the past 10 minutes ",
+		"Average MOS score",
 		nil, nil)
 
-	total_conversations_below_threshold = prometheus.NewDesc(prometheus.BuildFQName(namespace, "", "total_conversations_below_threshold"),
+	totalConversationsBelowThreshold = prometheus.NewDesc(prometheus.BuildFQName(namespace, "", "total_conversations_below_threshold"),
 		"Total number of conversations below threshold",
 		nil, nil)
 
@@ -63,7 +63,7 @@ func (e *Exporter) Describe(ch chan<- *prometheus.Desc) {
 	ch <- up
 	ch <- totalHits
 	ch <- averageMosScore
-	ch <- total_conversations_below_threshold
+	ch <- totalConversationsBelowThreshold
 }
 
 func (e *Exporter) Collect(ch chan<- prometheus.Metric) {
@@ -78,10 +78,10 @@ func (e *Exporter) readMetrics(ch chan<- prometheus.Metric) {
 	//Maximum number of records per page
 	pageSize := 200
 
-	current_time := time.Now()
+	currentTime := time.Now()
 
 	//interval for past 10 minutes
-	interval := fmt.Sprintf("%v/%v", current_time.Add(time.Minute*-11).Format(time.RFC3339), current_time.Add(time.Minute*-1).Format(time.RFC3339))
+	interval := fmt.Sprintf("%v/%v", currentTime.Add(time.Minute*-11).Format(time.RFC3339), currentTime.Add(time.Minute*-1).Format(time.RFC3339))
 
 	queryBody := platformclientv2.Conversationquery{
 		Interval: &interval,
@@ -122,15 +122,15 @@ func (e *Exporter) readMetrics(ch chan<- prometheus.Metric) {
 		up, prometheus.GaugeValue, 1,
 	)
 
-	initial_totalHits := *conversations.TotalHits
+	initialTotalHits := *conversations.TotalHits
 
-	//To check for duplicates because the api returns duplicate conversations occasionally
-	collected_conversations := make(map[string]float64)
+	//To check for duplicates
+	collectedConversations := make(map[string]float64)
 
-	conversations_below_threshold := make(map[string]float64)
+	conversationsBelowThreshold := make(map[string]float64)
 
 	//To caculate average mos score
-	mos_score_sum := 0.0
+	mosScoreSum := 0.0
 
 	/*Due to a 200 item per response limit, the analytics api is being called
 	a couple of times based on the initial_totalHits above.
@@ -152,51 +152,51 @@ func (e *Exporter) readMetrics(ch chan<- prometheus.Metric) {
 
 		for _, v := range *api_response.Conversations {
 
-			conversation_mos_score := *v.MediaStatsMinConversationMos
+			conversationMosScore := *v.MediaStatsMinConversationMos
 
-			_, exists := collected_conversations[*v.ConversationId]
+			_, exists := collectedConversations[*v.ConversationId]
 
 			if !exists {
-				mos_score_sum += conversation_mos_score
-				if conversation_mos_score <= 4.87 {
+				mosScoreSum += conversationMosScore
+				if conversationMosScore <= 4.87 {
 					ch <- prometheus.MustNewConstMetric(
-						mosScore, prometheus.GaugeValue, conversation_mos_score, *v.ConversationId,
+						mosScore, prometheus.GaugeValue, conversationMosScore, *v.ConversationId,
 					)
-					conversations_below_threshold[*v.ConversationId] = conversation_mos_score
+					conversationsBelowThreshold[*v.ConversationId] = conversationMosScore
 				}
-				collected_conversations[*v.ConversationId] = conversation_mos_score
+				collectedConversations[*v.ConversationId] = conversationMosScore
 			}
 		}
 
 		pageNumber++
 	}
 
-	average_mos_score := mos_score_sum / float64(len(collected_conversations))
+	averageMos := mosScoreSum / float64(len(collectedConversations))
 
-	if len(collected_conversations) == 0 {
-		average_mos_score = 0
+	if len(collectedConversations) == 0 {
+		averageMos = 0
 	}
 
 	//Update average mos score
 	ch <- prometheus.MustNewConstMetric(
-		averageMosScore, prometheus.GaugeValue, average_mos_score,
+		averageMosScore, prometheus.GaugeValue, averageMos,
 	)
 
 	//Update conversations below threshold
 	ch <- prometheus.MustNewConstMetric(
-		total_conversations_below_threshold, prometheus.GaugeValue, float64(len(conversations_below_threshold)),
+		totalConversationsBelowThreshold, prometheus.GaugeValue, float64(len(conversationsBelowThreshold)),
 	)
 
 	//Update total hits
 	ch <- prometheus.MustNewConstMetric(
-		totalHits, prometheus.GaugeValue, float64(len(collected_conversations)),
+		totalHits, prometheus.GaugeValue, float64(len(collectedConversations)),
 	)
 
-	fmt.Println("Initial total hits:", initial_totalHits)
-	fmt.Println("Total hits:", len(collected_conversations))
-	fmt.Println("Average MOS score:", average_mos_score)
-	fmt.Println("Total conversations below threshold:", len(conversations_below_threshold))
-	fmt.Println("............................................")
+	log.Println("Initial total hits:", initialTotalHits)
+	log.Println("Total hits:", len(collectedConversations))
+	log.Println("Average MOS score:", averageMos)
+	log.Println("Total conversations below threshold:", len(conversationsBelowThreshold))
+	log.Println("............................................")
 }
 
 func main() {
@@ -233,6 +233,7 @@ func main() {
 	analyticsApi := platformclientv2.NewAnalyticsApi()
 
 	exporter := NewExporter(environment, clientId, clientSecret, analyticsApi)
+
 	prometheus.MustRegister(exporter)
 
 	fmt.Println("Exporter started")
