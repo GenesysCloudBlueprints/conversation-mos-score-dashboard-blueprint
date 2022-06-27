@@ -1,4 +1,4 @@
-# Conversation MOS score dashboard Blueprint(Draft)
+# Conversation MOS score dashboard Blueprint
 
 This blueprint demonstrates how to integrate a Genesys Cloud API into Prometheus and Grafana.
 
