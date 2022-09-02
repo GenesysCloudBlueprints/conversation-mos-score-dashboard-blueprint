@@ -1,5 +1,5 @@
 ---
-title: Create MOS Score Dashboard (Draft)
+title: Create MOS Score Dashboard
 author: ebenezer.osei
 indextype: blueprint
 icon: blueprint
@@ -80,7 +80,7 @@ This blueprint demonstrates how to:
 
 ### Clone the repository that contains the project files
 
-Clone the [conversation-MOS-score-dashboard-blueprint](https://github.com/EbenOsei21/deploy-sample-eventOrchestration-setup-blueprint "Opens the conversation-MOS-score-dashboard-blueprint") repository from GitHub to your local environment's configuration.
+Clone the [conversation-MOS-score-dashboard-blueprint](https://github.com/GenesysCloudBlueprints/conversation-mos-score-dashboard-blueprint "Opens the conversation-MOS-score-dashboard-blueprint") repository from GitHub to your local environment's configuration.
 
 ### Download and extract Prometheus, Grafana and the Alert manager
 
@@ -171,7 +171,7 @@ docker-compose up
 
 ### View Dashboard
 
-Open your browser and navigate to http://localhost:9090. There you'll see a prometheus instance running. To view the metrics collected by the exporter, you can search for `genesys_mos_score` in the search bar. Prometheus provides a myriad ways to query your metrics data. More about that can be found here: [querying prometheus](https://prometheus.io/docs/prometheus/latest/querying/basics/).
+Open your browser and navigate to http://localhost:9090. If everything worked correctly, you'll see a prometheus instance running. To view the metrics collected by the exporter, you can search for `genesys_mos_score` in the search bar. Prometheus provides a myriad ways to query your metrics data. More about that can be found here: [querying prometheus](https://prometheus.io/docs/prometheus/latest/querying/basics/).
 
 For a better UI experience, open http://localhost:3000 where Grafana will be located. You will be asked for a user name and password, the default is `admin` for both but you change that after you login. After logging, you can easily create a dashboard to track any preferred metric(s).
 
@@ -183,4 +183,4 @@ You can also modify the configuration of the alert manager. It's currently set t
 - [Writing exporters for prometheus](https://prometheus.io/docs/instrumenting/writing_exporters/) in prometheus docs
 - [Prometheus Alerting rules](https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/) in promethus docs
 - [Integrating prometheus with pagerDuty](https://www.pagerduty.com/docs/guides/prometheus-integration-guide/) on pagerDuty website
-- [conversation-MOS-score-dashboard-blueprint](https://github.com/EbenOsei21/conversation-MOS-score-dashboard-blueprint) on Github
+- [conversation-MOS-score-dashboard-blueprint](https://github.com/GenesysCloudBlueprints/conversation-mos-score-dashboard-blueprint) on Github
