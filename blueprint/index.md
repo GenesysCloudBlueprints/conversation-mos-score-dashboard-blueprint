@@ -6,7 +6,7 @@ icon: blueprint
 image: images/flowchart.png
 category: 6
 summary: |
-This Genesys Cloud Developer Blueprint demonstrates how to set up Prometheus, Alert Manager and Grafana to keep track of MOS scores of conversations in your organization. The blueprint also demonstrates how to write an exporter(in golang) that grabs conversation data from genesys' analytics api and update required metrics.
+  This Genesys Cloud Developer Blueprint demonstrates how to set up Prometheus, Alert Manager and Grafana to keep track of MOS scores of conversations in your organization. The blueprint also demonstrates how to write an exporter(in golang) that grabs conversation data from genesys' analytics api and update required metrics.
 ---
 :::{"alert":"primary","title":"About Genesys Cloud Blueprints","autoCollapse":false} 
 Genesys Cloud blueprints were built to help you jump-start building an application or integrating with a third-party partner. 
