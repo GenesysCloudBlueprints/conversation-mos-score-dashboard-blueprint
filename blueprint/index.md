@@ -75,7 +75,7 @@ This blueprint demonstrates how to:
 ## Implementation steps
 
 - [Clone the repository that contains the project files](#clone-the-repository-that-contains-the-project-files "Goes to the Clone the repository containing the project files section")
-- [Download and extract Prometheus and the Alert Manager](#download-and-extract-prometheus-and-the-alert-manager "Download and extract prometheus and the alert manager section")
+- [Download and extract Prometheus, Grafana, and the Alert Manager](#download-and-extract-prometheus-grafana-and-the-alert-manager "Download and extract prometheus, gafana, and the alert manager section")
 - [Get PagerDuty integration key](#get-pagerduty-integration-key "Goes to the get pagerduty intgration key section")
 - [Configure Prometheus](#configure-prometheus "Goes to the configure promethues section")
 - [Configure Alert Manager](#configure-alert-manager "Goes to the configure alert manager section")
@@ -89,7 +89,7 @@ This blueprint demonstrates how to:
 
 Clone the [conversation-MOS-score-dashboard-blueprint](https://github.com/GenesysCloudBlueprints/conversation-mos-score-dashboard-blueprint "Opens the conversation-MOS-score-dashboard-blueprint") repository from GitHub to your local environment's configuration.
 
-### Download and extract Prometheus, Grafana and the Alert manager
+### Download and extract Prometheus, Grafana, and the Alert Manager
 
 - [Download](https://prometheus.io/download/) the zip files of Prometheus and Alert Manager based on your environment
 
