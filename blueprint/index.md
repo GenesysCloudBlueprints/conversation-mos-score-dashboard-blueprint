@@ -12,7 +12,7 @@ summary: |
 Genesys Cloud blueprints were built to help you jump-start building an application or integrating with a third-party partner. 
 Blueprints are meant to outline how to build and deploy your solutions, not a production-ready turn-key solution.
  
-For more details on Genesys Cloud blueprint support and practices 
+For more details on Genesys Cloud blueprint support and practices, 
 please see our Genesys Cloud blueprint [FAQ](https://developer.genesys.cloud/blueprints/faq)sheet.
 :::
 
@@ -20,9 +20,9 @@ This Genesys Cloud Developer Blueprint demonstrates how to set up Prometheus, Al
 
 This blueprint demonstrates how to:
 
-- Write a promethues exporter in golang
-- Configure prometheus and the Alert Manager.
-- Configure Alert Manager to send to notifications to PagerDuty
+- Write a Prometheus exporter in golang
+- Configure Prometheus and the Alert Manager.
+- Configure Alert Manager to send notifications to PagerDuty
 - Set up the infrastructure with docker-compose
 
 **Note**: This blueprint demonstrates how to run prometheus and associated software both locally and using docker compose. If you prefer to utilize docker, you can skip to the [ docker compose](#run-with-docker-compose) section.
