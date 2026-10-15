@@ -32,7 +32,7 @@ require (
 	github.com/tidwall/pretty v1.1.0 // indirect
 	golang.org/x/sys v0.0.0-20220114195835-da31bd327af9 // indirect
 	golang.org/x/text v0.3.6 // indirect
-	google.golang.org/protobuf v1.26.0 // indirect
+	google.golang.org/protobuf v1.33.0 // indirect
 	gopkg.in/ini.v1 v1.51.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
